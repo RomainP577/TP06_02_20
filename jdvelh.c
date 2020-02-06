@@ -17,6 +17,7 @@ typedef struct Lieu Lieu;
 
 int Gold=10;
 int HP=100;
+int Access=0;
 
 int main (){
 	
@@ -28,10 +29,11 @@ int main (){
 		int i;
 
 		//Declaration lieux
+		//Lieu example = {"Name", Exist, details, Gold, HP, ID};
 		Lieu Depart = {"Depart(tap0)", 1, "Lieu1Details", 0, 0, 0};
 		Lieu Lieu1 = {"Lieu1(tap1)", 1, "Lieu1Details", -2, +8, 0};
-		Lieu Lieu2 = {"Lieu2(tap2)", 1, "Lieu1Details", 6, -12, 0};
-		Lieu Lieu3 = {"Lieu3(tap3)", 1, "Lieu1Details", 14, -20, 0};
+		Lieu Lieu2 = {"Lieu2(tap2, require 20+ gold)", 1, "Lieu1Details", 6, -12, 0};
+		Lieu Lieu3 = {"Lieu3(tap3, require 80+ HP)", 1, "Lieu1Details", 14, -20, 0};
 		
 		//Array lieux
 		a_Lieux[0] = Depart;
@@ -62,23 +64,66 @@ int main (){
 		//CONDITIONS DEPLACEMENT
 		if (a_Lieux[ChoixLieu].LieuExistant==1)
 		{
-			printf("Vous etes arrive au %s \n", a_Lieux[ChoixLieu].Name);
-			if (Gold>=0)
+			if (ChoixLieu==2)
 			{
-				Gold += a_Lieux[ChoixLieu].GoldGain;
-				if (Gold<0)
+				if (Gold>=20)
 				{
-					Gold=0;
+					printf("Vous etes arrive au %s \n", a_Lieux[ChoixLieu].Name);
+					Access=1;
 				}
 			}
-			if (HP<=100)
+			else
 			{
-				HP += a_Lieux[ChoixLieu].HPGain;
+				printf("Vous ne pouvez pas acceder a %s\n", a_Lieux[ChoixLieu].Name);
+				Access=0;
 			}
-			else if (HP>100)
+			
+			if (ChoixLieu==3)
 			{
-				HP=100;
+				if (HP>=80)
+				{
+					printf("Vous etes arrive au %s \n", a_Lieux[ChoixLieu].Name);
+					Access=1;
+				}
 			}
+			else
+			{
+				printf("Vous ne pouvez pas acceder a %s\n", a_Lieux[ChoixLieu].Name);
+				Access=0;
+			}
+			
+			
+			if (ChoixLieu!=3)
+			{
+				if (ChoixLieu!=2)
+				{
+				printf("Vous etes arrive au %s \n", a_Lieux[ChoixLieu].Name);
+				Access=1;
+				}
+			}
+			
+			printf("\n");
+			
+			if (Access==1)
+			{
+				if (Gold>=0)
+				{
+					Gold += a_Lieux[ChoixLieu].GoldGain;
+					if (Gold<0)
+					{
+						Gold=0;
+					}
+				}
+				if (HP<=100)
+				{
+					HP += a_Lieux[ChoixLieu].HPGain;
+				}
+				if (HP>100)
+				{
+					HP=100;
+				}
+			}
+			
 			printf("Vous avez %d or \n", Gold);
 			printf("Vous avez %d HP \n \n", HP);
 		}
