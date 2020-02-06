@@ -14,11 +14,13 @@ struct Lieu
 
 typedef struct Lieu Lieu;
 
-int Travel = 1;
+
+int Gold=10;
+int HP=100;
 
 int main (){
-
-	while (Travel=1)
+	
+	while (HP>0)
 	{
 			//vars
 		int ChoixLieu;
@@ -26,10 +28,10 @@ int main (){
 		int i;
 
 		//Declaration lieux
-		Lieu Depart = {"Depart(tap0)", 1, "Lieu1Details", 2, 3, 0};
-		Lieu Lieu1 = {"Lieu1(tap1)", 1, "Lieu1Details", 2, 3, 0};
-		Lieu Lieu2 = {"Lieu2(tap2)", 1, "Lieu1Details", 2, 3, 0};
-		Lieu Lieu3 = {"Lieu3(tap3)", 1, "Lieu1Details", 2, 3, 0};
+		Lieu Depart = {"Depart(tap0)", 1, "Lieu1Details", 0, 0, 0};
+		Lieu Lieu1 = {"Lieu1(tap1)", 1, "Lieu1Details", -2, +8, 0};
+		Lieu Lieu2 = {"Lieu2(tap2)", 1, "Lieu1Details", 6, -12, 0};
+		Lieu Lieu3 = {"Lieu3(tap3)", 1, "Lieu1Details", 14, -20, 0};
 		
 		//Array lieux
 		a_Lieux[0] = Depart;
@@ -61,7 +63,25 @@ int main (){
 		if (a_Lieux[ChoixLieu].LieuExistant==1)
 		{
 			printf("Vous etes arrive au %s \n", a_Lieux[ChoixLieu].Name);
+			if (Gold>=0)
+			{
+				Gold += a_Lieux[ChoixLieu].GoldGain;
+				if (Gold<0)
+				{
+					Gold=0;
+				}
+			}
+			if (HP<=100)
+			{
+				HP += a_Lieux[ChoixLieu].HPGain;
+			}
+			else if (HP>100)
+			{
+				HP=100;
+			}
+			printf("Vous avez %d or \n", Gold);
+			printf("Vous avez %d HP \n \n", HP);
 		}
-	}
-	
+	}	
+	printf("Vous etes mort");
 }
